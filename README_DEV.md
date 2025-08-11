@@ -8,7 +8,7 @@ This project can be run using Docker Compose or by manually starting the Docker 
 
 ### Using Docker Compose (Recommended)
 
-This method utilizes the `docker-compose.yml` file to define and manage the multi-container application.
+This method utilizes the `docker-compose.yml` file to define and manage the multi-container application, including both the PHP/Apache service and the MySQL database.
 
 1.  **Start the services:**
     ```bash
@@ -45,11 +45,11 @@ This project includes `start.sh` script for manual control over the Docker conta
 
 ## How to Build the Docker Image
 
-To build the Docker image for this project, you can use Docker Compose or the provided build script. The image build process is defined by the `Dockerfile` located at the root of the project, which is utilized by both methods.
+To build the Docker image for this project, you can use Docker Compose or the provided build script. The image build process is defined by the `Dockerfile` located at the root of the project, which is utilized by both methods. This `Dockerfile` specifically builds the **PHP/Apache application image**.
 
 ### Using Docker Compose
 
-This method utilizes the `docker-compose.yml` file to define the build process for the services.
+This method utilizes the `docker-compose.yml` file to define the build process for the services. When you run `docker-compose build`, it will build the PHP/Apache image as defined in the `Dockerfile` and prepare the entire multi-service application.
 
 1.  **Build the Docker images:**
     ```bash
@@ -62,4 +62,4 @@ This method utilizes the `docker-compose.yml` file to define the build process f
     ```bash
     ./build.sh
     ```
-    This script builds the `template-lamp-stack` Docker image.
+    This script builds the `template-lamp-stack` Docker image, which is the PHP/Apache application image.

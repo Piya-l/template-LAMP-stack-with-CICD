@@ -16,5 +16,4 @@ README.md
 # Ignore database directory
 database/
 
-# Ignore config directory (we explicitly copy apache-custom.conf)
-config/
+

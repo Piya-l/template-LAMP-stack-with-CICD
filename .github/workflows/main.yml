@@ -31,6 +31,21 @@ jobs:
         docker tag my-php-app:production piyapiya/my-php-production:latest
         docker push piyapiya/my-php-production:latest
 
+    # - name: Wait before updating description
+    #   run: sleep 30
+
+    - name: Wait for repo to be ready
+      run: |
+        for i in {1..5}; do
+          if curl -s -u "${{ secrets.DOCKERHUB_USERNAME }}:${{ secrets.DOCKERHUB_TOKEN }}" \
+            https://hub.docker.com/v2/repositories/piyapiya/my-php-production/ > /dev/null; then
+            echo "Repo is ready"
+            break
+          fi
+          echo "Repo not ready, retrying in 10s..."
+          sleep 10
+        done
+        
     - name: Update Docker Hub Description
       uses: peter-evans/dockerhub-description@v4
       with:

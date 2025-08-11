@@ -27,5 +27,5 @@ jobs:
 
     - name: Tag and Push Docker image
       run: |
-        docker tag my-php-app:production YOUR_DOCKERHUB_USERNAME/my-php-app:latest
-        docker push YOUR_DOCKERHUB_USERNAME/my-php-app:latest
+        docker tag my-php-app:production piyapiya/my-php-app:latest
+        docker push piyapiya/my-php-app:latest

@@ -30,3 +30,11 @@ jobs:
       run: |
         docker tag my-php-app:production piyapiya/my-php-app:latest
         docker push piyapiya/my-php-app:latest
+
+    - name: Update Docker Hub Description
+      uses: peter-evans/dockerhub-description@v4
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+        repository: piyapiya/my-php-app # Make sure this matches your Docker Hub repo
+        readme-filepath: ./README.md

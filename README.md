@@ -11,6 +11,14 @@ This project provides a template for a LAMP (Linux, Apache, MySQL, PHP) stack, i
 
 This project leverages GitHub Actions to automate the build, test, and deployment processes. Upon changes to the `main` branch, the CI/CD pipeline automatically builds the Docker image, pushes it to Docker Hub, and updates the Docker Hub repository description.
 
+## Project Configuration
+
+This section outlines key configuration files that allow you to customize the project's behavior.
+
+*   `.env.example`: This file serves as a template for environment variables. Copy it to `.env` and modify the values to configure database credentials, application settings, and other environment-specific parameters. **Do not commit your `.env` file to version control.**
+*   `config/apache-custom.conf`: This file allows for custom Apache configurations. Any directives placed here will be included in the Apache server configuration within the Docker container, enabling you to override default settings or add new virtual hosts, rewrite rules, etc.
+*   `database/.my-healthcheck.cnf`: This file is used by the MySQL container's healthcheck to connect to the database and verify its status. It contains credentials specifically for the healthcheck process.
+
 ## Key Configuration Files
 
 Here's a list of important configuration files within this project:

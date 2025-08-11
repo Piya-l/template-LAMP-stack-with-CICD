@@ -28,13 +28,13 @@ jobs:
 
     - name: Tag and Push Docker image
       run: |
-        docker tag my-php-app:production piyapiya/my-php-app:latest
-        docker push piyapiya/my-php-app:latest
+        docker tag my-php-app:production piya-l/template-lamp-stack-with-cicd:latest
+        docker push piya-l/template-lamp-stack-with-cicd:latest
 
     - name: Update Docker Hub Description
       uses: peter-evans/dockerhub-description@v4
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: piyapiya/my-php-app
+        repository: piya-l/template-lamp-stack-with-cicd
         readme-filepath: ./README.md

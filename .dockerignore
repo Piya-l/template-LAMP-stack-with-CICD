@@ -1,0 +1,20 @@
+# Ignore Git-related files
+.git/
+.gitignore
+
+# Ignore Docker-related files (except Dockerfile itself)
+Dockerfile
+docker-compose.yml
+build.sh
+stop.sh
+start.sh
+
+# Ignore development/local files
+.env.example
+README.md
+
+# Ignore database directory
+database/
+
+# Ignore config directory (we explicitly copy apache-custom.conf)
+config/

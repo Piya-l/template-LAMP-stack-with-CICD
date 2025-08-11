@@ -8,6 +8,8 @@ This project can be run using Docker Compose or by manually starting the Docker 
 
 ### Using Docker Compose (Recommended)
 
+This method utilizes the `docker-compose.yml` file to define and manage the multi-container application.
+
 1.  **Start the services:**
     ```bash
     docker-compose up -d
@@ -46,6 +48,8 @@ This project includes `start.sh` script for manual control over the Docker conta
 To build the Docker image for this project, you can use Docker Compose or the provided build script. The image build process is defined by the `Dockerfile` located at the root of the project, which is utilized by both methods.
 
 ### Using Docker Compose
+
+This method utilizes the `docker-compose.yml` file to define the build process for the services.
 
 1.  **Build the Docker images:**
     ```bash

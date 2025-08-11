@@ -1,52 +1,8 @@
-# template-LAMP-stack
+# template-LAMP-stack-with-CICD
 
-This is a template for a LAMP (Linux, Apache, MySQL, PHP) stack using Docker.
+This project provides a template for a LAMP (Linux, Apache, MySQL, PHP) stack, integrated with a Continuous Integration/Continuous Deployment (CI/CD) pipeline using Docker and GitHub Actions.
 
-## How to Run This Project
+## Getting Started
 
-This project can be run using Docker Compose or by manually building and starting the Docker containers.
-
-### Using Docker Compose (Recommended)
-
-1.  **Build the Docker images:**
-    ```bash
-    docker-compose build
-    ```
-2.  **Start the services:**
-    ```bash
-    docker-compose up -d
-    ```
-    This will start the Apache and MySQL services in detached mode.
-
-3.  **Access the application:**
-    Open your web browser and navigate to `http://localhost:8080` (or the port you've configured).
-
-4.  **Stop the services:**
-    ```bash
-    docker-compose down
-    ```
-
-### Using Shell Scripts
-
-This project includes `build.sh` and `start.sh` scripts for manual control over the Docker containers.
-
-1.  **Build the Docker image:**
-    ```bash
-    ./build.sh
-    ```
-    This script builds the `template-lamp-stack` Docker image.
-
-2.  **Start the services:**
-    ```bash
-    ./start.sh
-    ```
-    This script starts the Apache and MySQL containers.
-
-3.  **Access the application:**
-    Open your web browser and navigate to `http://localhost:8080` (or the port you've configured).
-
-4.  **Stop the services:**
-    ```bash
-    ./stop.sh
-    ```
-    This script stops and removes the Docker containers.
+*   For instructions on setting up and running the project for **local development**, please refer to [README_DEV.md](README_DEV.md).
+*   For details on the **deployment process and CI/CD pipeline**, including Docker Hub integration, please refer to [README_DEPLOY.md](README_DEPLOY.md).

@@ -43,7 +43,7 @@ This project includes `start.sh` script for manual control over the Docker conta
 
 ## How to Build the Docker Image
 
-To build the Docker image for this project, you can use Docker Compose or the provided build script.
+To build the Docker image for this project, you can use Docker Compose or the provided build script. The image build process is defined by the `Dockerfile` located at the root of the project.
 
 ### Using Docker Compose
 

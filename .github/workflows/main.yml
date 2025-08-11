@@ -36,5 +36,5 @@ jobs:
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: piyapiya/my-php-app # Make sure this matches your Docker Hub repo
+        repository: piyapiya/my-php-app
         readme-filepath: ./README.md

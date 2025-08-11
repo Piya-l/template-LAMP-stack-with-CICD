@@ -36,5 +36,5 @@ jobs:
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-        repository: piya-l/template-lamp-stack-with-cicd
+        repository: piya-l/template-LAMP-stack-with-cicd
         readme-filepath: ./README.md

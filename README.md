@@ -1,17 +1,52 @@
-# My PHP Application
+# template-LAMP-stack
 
-This is a simple PHP application running on Apache.
+This is a template for a LAMP (Linux, Apache, MySQL, PHP) stack using Docker.
 
-## How to Run
+## How to Run This Project
 
-To run this application using Docker, make sure you have Docker installed, then execute the following command:
+This project can be run using Docker Compose or by manually building and starting the Docker containers.
 
-```bash
-docker run -p 8080:80 piyapiya/my-php-app:latest
-```
+### Using Docker Compose (Recommended)
 
-After running the command, open your web browser and navigate to `http://localhost:8080`.
+1.  **Build the Docker images:**
+    ```bash
+    docker-compose build
+    ```
+2.  **Start the services:**
+    ```bash
+    docker-compose up -d
+    ```
+    This will start the Apache and MySQL services in detached mode.
 
-## CI/CD
+3.  **Access the application:**
+    Open your web browser and navigate to `http://localhost:8080` (or the port you've configured).
 
-This project uses GitHub Actions to automatically build and push Docker images to Docker Hub on every push to the `main` branch.
+4.  **Stop the services:**
+    ```bash
+    docker-compose down
+    ```
+
+### Using Shell Scripts
+
+This project includes `build.sh` and `start.sh` scripts for manual control over the Docker containers.
+
+1.  **Build the Docker image:**
+    ```bash
+    ./build.sh
+    ```
+    This script builds the `template-lamp-stack` Docker image.
+
+2.  **Start the services:**
+    ```bash
+    ./start.sh
+    ```
+    This script starts the Apache and MySQL containers.
+
+3.  **Access the application:**
+    Open your web browser and navigate to `http://localhost:8080` (or the port you've configured).
+
+4.  **Stop the services:**
+    ```bash
+    ./stop.sh
+    ```
+    This script stops and removes the Docker containers.

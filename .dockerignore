@@ -1,19 +1,18 @@
-# Ignore Git-related files
-.git/
+# Git and Docker files
+.git
 .gitignore
+.dockerignore
 
-# Ignore Docker-related files (except Dockerfile itself)
-Dockerfile
-docker-compose.yml
-build.sh
-stop.sh
-start.sh
+# Local environment and secrets
+.env
 
-# Ignore development/local files
-.env.example
+# Local data and documentation
+/database/
 README.md
+README_DEV.md
+README_DEPLOY.md
 
-# Ignore database directory
-database/
-
-
+# Shell scripts (not needed in the final image)
+start.sh
+stop.sh
+test.sh

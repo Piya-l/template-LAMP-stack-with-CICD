@@ -1,34 +1,56 @@
-
+# A complete Docker Compose file for a PHP, MariaDB, and phpMyAdmin stack.
+# Best practices include building the app container and auto-initializing the database.
 
 services:
+  # 1. PHP Application Service
+  # Builds a custom image from a Dockerfile to include necessary extensions and configs.
   php:
-    image: php:8.2-apache
-    volumes:
-      - ./src:/var/www/html/
-      - ./config/apache-custom.conf:/usr/local/apache2/conf/extra/apache-custom.conf
+    build:
+      context: ./php # Looks for a Dockerfile in the './php' directory
+      args:
+        BUILD_ENV: ${BUILD_ENV:-development}
+    image: piyapiya/my-php-app:latest # Names the custom image being built
     ports:
       - "8080:80"
+    volumes:
+      # Mounts local source code for live development.
+      # For production, you would remove this line to use the code baked into the image.
+      - ./php/src:/var/www/html/
     depends_on:
       - db
-
-  db:
-    image: mariadb:10.5
-    restart: always
+    restart: unless-stopped
     environment:
-      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      DB_HOST: db
+      DB_NAME: mydatabase
+      DB_USER: root
+      DB_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+
+  # 2. Database Service
+  # Uses the official, pre-built MariaDB image for stability and security.
+  db:
+    image: mariadb:10.11 # Using a specific, recent version is good practice
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD} # Use a .env file for secrets
       MARIADB_DATABASE: mydatabase
     volumes:
+      # This bind mount persists database data in the local ./database directory.
       - ./database:/var/lib/mysql
+      # This bind mount provides the one-time initialization scripts. 🌱
+      - ./init-db:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306" # Exposes the port for local database tools
+    restart: unless-stopped
 
+  # 3. phpMyAdmin Service
+  # A database management tool for development.
   phpmyadmin:
-    image: phpmyadmin/phpmyadmin:5.2
-    restart: always
+    image: phpmyadmin:5.2
+    environment:
+      PMA_HOST: db # Connects to the 'db' service hostname
+      PMA_PORT: 3306
     ports:
       - "8081:80"
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
     depends_on:
       - db
-
+    restart: unless-stopped
 

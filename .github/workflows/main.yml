@@ -14,11 +14,8 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Make build script executable
-      run: chmod +x build.sh
-
-    - name: Build Docker image
-      run: ./build.sh
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
 
     - name: Log in to Docker Hub
       uses: docker/login-action@v3
@@ -26,30 +23,36 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-    - name: Tag and Push Docker image
+    - name: Create .env file for Docker Compose
       run: |
-        docker tag my-php-app:production piyapiya/my-php-production:latest
-        docker push piyapiya/my-php-production:latest
+        echo "MARIADB_ROOT_PASSWORD=${{ secrets.MARIADB_ROOT_PASSWORD }}" > .env
+      env:
+        MARIADB_ROOT_PASSWORD: ${{ secrets.MARIADB_ROOT_PASSWORD }}
 
-    # - name: Wait before updating description
-    #   run: sleep 30
+    - name: Build Docker Compose services
+      run: docker compose build
+      env:
+        BUILD_ENV: production
 
-    - name: Wait for repo to be ready
+    - name: Push Docker Compose images
+      run: docker compose push
+
+    - name: Wait for repo to be ready (optional, for Docker Hub description update)
       run: |
         for i in {1..5}; do
           if curl -s -u "${{ secrets.DOCKERHUB_USERNAME }}:${{ secrets.DOCKERHUB_TOKEN }}" \
-            https://hub.docker.com/v2/repositories/piyapiya/my-php-production/ > /dev/null; then
+            https://hub.docker.com/v2/repositories/piyapiya/my-php-app/ > /dev/null; then # Updated repo name
             echo "Repo is ready"
             break
           fi
           echo "Repo not ready, retrying in 10s..."
           sleep 10
         done
-        
+
     - name: Update Docker Hub Description
       uses: peter-evans/dockerhub-description@v4
       with:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
-        repository: piyapiya/my-php-production
+        repository: piyapiya/my-php-app # Updated repo name
         readme-filepath: ./README_DEPLOY.md

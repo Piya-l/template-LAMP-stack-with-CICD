@@ -1,1 +1,4 @@
 .env
+
+# Ignore the local database data directory
+/database/

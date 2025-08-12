@@ -1,65 +1,73 @@
-# Development Setup
+# Local Development Guide
 
-This document provides instructions for setting up and running the LAMP stack for local development.
+This document provides instructions for setting up and running the LAMP stack on your local machine for development.
 
-## How to Run the Development Environment
+## Prerequisites
 
-This project can be run using Docker Compose or by manually starting the Docker containers.
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
-### Using Docker Compose (Recommended)
+## First-Time Setup
 
-This method utilizes the `docker-compose.yml` file to define and manage the multi-container application, including both the PHP/Apache service and the MySQL database.
+1.  **Clone the Repository**
 
-1.  **Start the services:**
     ```bash
-    docker-compose up -d
+    git clone <repository_url>
+    cd template-LAMP-stack
     ```
-    This will start the Apache and MySQL services in detached mode.
 
-2.  **Access the application:**
-    Open your web browser and navigate to `http://localhost:8080` (or the port you've configured).
+2.  **Create Environment File**
 
-3.  **Stop the services:**
+    Copy the example environment file to a new `.env` file. This file is ignored by Git and will hold your local secrets.
+
+    ```bash
+    cp .env.example .env
+    ```
+
+3.  **Configure Password**
+
+    Open the `.env` file and set a secure password for `MARIADB_ROOT_PASSWORD`.
+
+## Running the Application
+
+1.  **Start All Services**
+
+    Use Docker Compose to build the images and start all containers in the background.
+
+    ```bash
+    docker-compose up -d --build
+    ```
+
+2.  **Access the Services**
+
+    - **PHP Application**: [http://localhost:8080](http://localhost:8080)
+    - **phpMyAdmin**: [http://localhost:8081](http://localhost:8081)
+
+3.  **Stopping the Application**
+
+    To stop all running services, use:
+
     ```bash
     docker-compose down
     ```
 
-### Using Shell Scripts
+## Data Persistence
 
-This project includes `start.sh` script for manual control over the Docker containers.
+- **Database Files**: The MariaDB database stores its data in the `./database` directory on your host machine. This is achieved using a **bind mount**.
+- **Git Ignore**: The `./database` directory is listed in `.gitignore`, so your local data files will never be committed to version control.
+- **Persistence**: Because the data is on your host machine, it will persist even after you run `docker-compose down`.
 
-1.  **Start the services:**
-    ```bash
-    ./start.sh
-    ```
-    This script starts the Apache and MySQL containers.
+## Connecting to the Database
 
-2.  **Access the application:**
-    Open your web browser and navigate to `http://localhost:8080` (or the port you've configured).
+- **Host**: `db` (from within another Docker container) or `localhost` (from your host machine)
+- **Port**: `3306`
+- **Username**: `root`
+- **Password**: The one you set in your `.env` file.
 
-3.  **Stop the services:**
-    ```bash
-    ./stop.sh
-    ```
-    This script stops and removes the Docker containers.
+## Running Tests
 
-## How to Build the Docker Image
+This project includes a simple test to verify the web server is running.
 
-To build the Docker image for this project, you can use Docker Compose or the provided build script. The image build process is defined by the `Dockerfile` located at the root of the project, which is utilized by both methods. This `Dockerfile` specifically builds the **PHP/Apache application image**.
-
-### Using Docker Compose
-
-This method utilizes the `docker-compose.yml` file to define the build process for the services. When you run `docker-compose build`, it will build the PHP/Apache image as defined in the `Dockerfile` and prepare the entire multi-service application.
-
-1.  **Build the Docker images:**
-    ```bash
-    docker-compose build
-    ```
-
-### Using Shell Scripts
-
-1.  **Build the Docker image:**
-    ```bash
-    ./build.sh
-    ```
-    This script builds the `template-lamp-stack` Docker image, which is the PHP/Apache application image.
+```bash
+./test.sh
+```

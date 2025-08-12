@@ -1,37 +1,31 @@
-# template-LAMP-stack-with-CICD
+# LAMP Stack Docker Template
 
-This project provides a template for a LAMP (Linux, Apache, MySQL, PHP) stack, integrated with a Continuous Integration/Continuous Deployment (CI/CD) pipeline using Docker and GitHub Actions.
+This project provides a comprehensive template for a LAMP (Linux, Apache, MariaDB, PHP) stack using Docker. It's designed for easy local development and includes a CI/CD pipeline using GitHub Actions for automated builds.
+
+## Core Features
+
+- **Dockerized Environment**: All services (PHP/Apache, MariaDB, phpMyAdmin) are containerized for consistency and isolation.
+- **Developer Focused**: Uses `docker-compose` for simple, one-command startup.
+- **Persistent Database**: Uses a local bind mount (`./database`) for persistent data during development.
+- **CI/CD Ready**: Includes a GitHub Actions workflow to automatically build and push the PHP application image to Docker Hub.
+
+## Project Structure
+
+```
+/
+├── .github/            # GitHub Actions CI/CD workflow
+├── database/           # Holds local database data (ignored by Git)
+├── init-db/            # SQL scripts for one-time database initialization
+├── php/                # Contains the PHP application source and Dockerfile
+│   ├── src/            # Your PHP application code
+│   └── Dockerfile      # Builds the custom PHP/Apache image
+├── .env.example        # Template for environment variables
+├── .gitignore          # Specifies files for Git to ignore
+├── docker-compose.yml  # Orchestrates all services for development
+└── ...
+```
 
 ## Getting Started
 
-*   For instructions on setting up and running the project for **local development**, please refer to [README_DEV.md](README_DEV.md).
-*   For details on the **deployment process and CI/CD pipeline**, including Docker Hub integration, please refer to [README_DEPLOY.md](README_DEPLOY.md).
-
-## CI/CD Overview
-
-This project leverages GitHub Actions to automate the build, test, and deployment processes. Upon changes to the `main` branch, the CI/CD pipeline automatically builds the Docker image, pushes it to Docker Hub, and updates the Docker Hub repository description.
-
-## Project Configuration
-
-This section outlines key configuration files that allow you to customize the project's behavior.
-
-*   `.env.example`: This file serves as a template for environment variables. Copy it to `.env` and modify the values to configure database credentials, application settings, and other environment-specific parameters. **Do not commit your `.env` file to version control.**
-*   `config/apache-custom.conf`: This file allows for custom Apache configurations. Any directives placed here will be included in the Apache server configuration within the Docker container, enabling you to override default settings or add new virtual hosts, rewrite rules, etc.
-*   `database/.my-healthcheck.cnf`: This file is used by the MySQL container's healthcheck to connect to the database and verify its status. It contains credentials specifically for the healthcheck process.
-
-## Key Configuration Files
-
-Here's a list of important configuration files within this project:
-
-### Docker Compose Related Files
-
-*   `docker-compose.yml`: Defines the multi-container Docker application (Apache, MySQL).
-
-### Build Related Files
-
-*   `Dockerfile`: Defines how the PHP/Apache Docker image is built.
-*   `build.sh`: A shell script to build the Docker image locally.
-
-### GitHub Actions Related Files
-
-*   `.github/workflows/main.yml`: The main workflow definition for the CI/CD pipeline.
+1.  **For local development**, see the detailed setup guide in [**README_DEV.md**](README_DEV.md).
+2.  **For deployment and CI/CD information**, refer to the production guide in [**README_DEPLOY.md**](README_DEPLOY.md).
